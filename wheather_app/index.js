@@ -24,7 +24,10 @@ app.post('/', function(req, res) {
             weatherData = JSON.parse(data);
             const temp = weatherData.main.temp;
             const weatherType = weatherData.weather[0].description;
-            res.send(`<p>city:<b> ${cityName}</b></p><p>temperature:<b> ${temp}</b></p><p>weather type: <b>${weatherType}</b></p>`);
+            const weatherIcon = weatherData.weather[0].icon;
+            const imageURL = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`
+            console.log(imageURL);
+            res.send(`<p>city:<b> ${cityName}</b></p><p>temperature:<b> ${temp}</b></p><p>weather type: <b>${weatherType}</b> <img src=${imageURL}></p>`);
         })
     });
 
