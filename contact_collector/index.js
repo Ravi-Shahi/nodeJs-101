@@ -37,9 +37,11 @@ app.post('/', function(req, res) {
             console.log(reject.response.body.title + " Please try Again!")
             res.sendFile(__dirname + "/failure.html");
         });
-
 })
 
+app.post("/failure", (req, res) => {
+    res.redirect('/');
+});
 
 app.listen(process.env.PORT, function() {
     console.log("Server is up and running bro!");

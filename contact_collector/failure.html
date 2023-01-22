@@ -6,10 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
-    <h1 style="text-align:center;">Use different Email and Try Again! </h1>
+<body style="background:white;">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1>Use different Email and Try Again! </h1>
+            <form action="/failure" method="post">
+                <button class="btn btn-warning center" type="submit">Try Again!</button>
+            </form>
+        </div>
+    </div>
+
 </body>
 
 </html>
