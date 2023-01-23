@@ -6,6 +6,7 @@ const ejs = require('ejs');
 const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + "/public"));
 
 const date = new Date();
 const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
