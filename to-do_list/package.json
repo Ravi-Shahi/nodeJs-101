@@ -1,0 +1,23 @@
+{
+    "name": "to-do_list",
+    "version": "0.0.1",
+    "description": "project to try templating using view-engine ejs",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "server": "nodemon"
+    },
+    "keywords": [
+        "to-do",
+        "list"
+    ],
+    "author": "Ravi-Shahi",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.20.1",
+        "dotenv": "^16.0.3",
+        "ejs": "^3.1.8",
+        "express": "^4.18.2",
+        "nodemon": "^2.0.20"
+    }
+}
