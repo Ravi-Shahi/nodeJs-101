@@ -20,9 +20,9 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-    const item = req.body.newItem;
-    todoList.push(item);
-    res.redirect('/');
-})
-
+        const item = req.body.newItem;
+        todoList.push(item);
+        res.redirect('/');
+    })
+    // connect it to database
 app.listen(process.env.PORT, () => console.log('Serve is started and active!'));
