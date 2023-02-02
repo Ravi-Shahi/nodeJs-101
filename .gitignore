@@ -3,3 +3,4 @@ r-n-d/*
 *.env
 *fuck.json
 *.sh
+*mongo_integration/*
