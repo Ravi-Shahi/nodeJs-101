@@ -5,29 +5,28 @@ const bodyParser = require('body-parser');
 const ejs = require('ejs');
 
 const app = express();
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');  
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
-const url = 'mongodb://localhost:27017';
-const client = new MongoClient(url);
+// Connection URI
+const uri = `mongodb://127.0.0.1:${process.env.MONGO_PORT}/`
+// Create a new MongoClient
+const client = new MongoClient(uri);
 
-async function main() {
-    // Use connect method to connect to the server
-    await client.connect();
-    console.log('Connected successfully to server');
-    const db = client.db(dbName);
-    const collection = db.collection('documents');
-
-    // the following code examples can be pasted here...
-
-    return 'done.';
-}
-
-main()
-    .then(console.log)
-    .catch(console.error)
-    .finally(() => client.close());
+async function run() {
+    try {
+      // Connect the client to the server (optional starting in v4.7)
+      await client.connect();
+      // Establish and verify connection
+      await client.db("admin").command({ ping: 1 });
+      console.log("Connected successfully to server");
+    } finally {
+      // Ensures that the client will close when you finish/error
+      await client.close();
+    }
+  }
+  run().catch(console.dir);
 
 const date = new Date();
 const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -43,7 +42,8 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
         const item = req.body.newItem;
         todoList.push(item);
+        const list = {title: item};
         res.redirect('/');
     })
     // connect it to database
-app.listen(process.env.PORT, () => console.log('Serve is started and active!'));
+app.listen(process.env.PORT, () => console.log('toDO Serve active!'));
