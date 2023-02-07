@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -9,45 +9,56 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
-const uri = `mongodb://127.0.0.1:${process.env.MONGO_PORT}/`
-const client = new MongoClient(uri);
+mongoose.set('strictQuery', true);
+const url = "mongodb://127.0.0.1:27017/todoDB";
+mongoose.connect(url);
 
-async function run() {
-  try {
-    await client.connect();
-    // Establish and verify connection
-    await client.db("todo").command({ ping: 1 });
-    console.log("Connected successfully to server");
-    const doc = { item: "Test ITem" };
-    const result = await client.db("todo").collection("list").insertOne(doc);
-    console.log(
-      `A document was inserted with the _id: ${result.insertedId}`,
-    );
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
+const itemSchema = new mongoose.Schema({
+  name: String
+})
+
+const item = new mongoose.model("items",itemSchema);
+
+const item1 = new item({
+  name: "Welcome to todo list App"
+});
+
+const item2 = new item({
+  name: "Hit + to add new item"
+})
+
+const item3 = new item({
+  name: "Hit <-- this to delete item"
+})
+
+const item4 = [item1,item2,item3];
 
 const date = new Date();
 const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 const today = date.toLocaleDateString('hi-IN', dateOptions);
 
-const todoList = [];
-
-
-
 app.get('/', (req, res) => {
-  console.log(todoList);
-  res.render('index', { day: today, newItem: todoList });
+  item.find({},(err,result)=>{
+    if(!err){
+      if(result.length === 0){
+        item.insertMany(item4);
+        res.redirect('/')
+      }else{
+        res.render('index', { day: today, newItem: result });
+      }
+    }
+    }
+  )
+  
 });
 
 app.post('/', (req, res) => {
-  const item = req.body.newItem;
-  todoList.push(item);
-  const list = { title: item };
+  const newItem = new item({
+    name: req.body.newItem
+  });
+  newItem.save();
   res.redirect('/');
 })
-// connect it to database
-app.listen(process.env.PORT, () => console.log('toDO Serve active!'));
+
+
+app.listen(process.env.PORT, () => console.log('App is active and ready to serve!'));
