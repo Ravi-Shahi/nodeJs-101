@@ -16,12 +16,14 @@
 
 <div class="box">
     <%for(item in newItem){%>
+        <form action="/delete" method="post">
         <div class="item">
-            <input type="checkbox">
+            <input type="checkbox" onchange="this.form.submit()" name="checkbox" value="<%=newItem[item]._id%>">
             <p>
                 <%=newItem[item].name%>
             </p>
         </div>
+    </form>
         <%}%>
             <form class="item" action="/" method="post">
                 <input type="text" name="newItem" placeholder="New item" autocomplete="off">
